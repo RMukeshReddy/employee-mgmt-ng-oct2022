@@ -1,0 +1,124 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>Add Employee</h1>
+      <button class="btn btn-dark" (click)="handleGoBack()">Go Back</button>
+    </div>
+
+    <!-- Step 3: patchup form tag with the FormGroup in ts -->
+    <!-- form submission -->
+    <form
+      class="col-md-6 offset-md-3"
+      [formGroup]="addEmployeeForm"
+      (ngSubmit)="handleAddEmployee()"
+    >
+      <!-- step 7: work on submission flow -- ref ts for step 8-->
+      <!-- name input field -->
+      <div class="form-group row mb-3">
+        <label for="staticName" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+          <!-- step 4: patchup form fields with the FormControl in ts -->
+          <!-- goto ts for step 5-->
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Name"
+            formControlName="name"
+            id="nameInput"
+            [ngClass]="{
+              'is-invalid':
+                addEmployeeForm.get('name')?.touched &&
+                addEmployeeForm.get('name')?.invalid
+            }"
+          />
+          <!-- step6: displaying validation related msg -->
+          <!-- name input field validations -->
+          <div class="invalid-feedback">
+            <div id="nameRequired" *ngIf="addEmployeeForm.get('name')?.invalid">
+              Name is required
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- phone input field -->
+      <div class="form-group row mb-3">
+        <label for="staticPhone" class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-10">
+          <input
+            type="text"
+            class="form-control"
+            id="phoneInput"
+            placeholder="Enter Phone"
+            formControlName="phone"
+            [ngClass]="{
+              'is-invalid':
+                addEmployeeForm.get('phone')?.touched &&
+                addEmployeeForm.get('phone')?.invalid
+            }"
+          />
+          <!-- phone input field validations -->
+          <div class="invalid-feedback">
+            <div
+              id="phoneRequired"
+              *ngIf="addEmployeeForm.get('phone')?.errors?.['required']">
+              Phone is required
+            </div>
+            <div
+              id="phoneMaxlength"
+              *ngIf="addEmployeeForm.get('phone')?.errors?.['maxlength']">
+              Phone should have maximum 10 numbers
+            </div>
+            <div
+              id="phonePattern"
+              *ngIf="addEmployeeForm.get('phone')?.errors?.['pattern']">
+              Please provide only numbers
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- email input field -->
+      <div class="form-group row mb-3">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input
+            type="email"
+            class="form-control"
+            id="emailInput"
+            placeholder="Enter Email"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid':
+                addEmployeeForm.get('email')?.touched &&
+                addEmployeeForm.get('email')?.invalid
+            }"
+          />
+          <!-- email input field validations -->
+          <div class="invalid-feedback">
+            <div
+              id="emailRequired"
+              *ngIf="addEmployeeForm.get('email')?.errors?.['required']">
+              Email is required
+            </div>
+            <div
+              id="invalidEmail"
+              *ngIf="addEmployeeForm.get('email')?.errors?.['email']">
+              Email seems to be not valid
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- submit button -->
+      <div class="form-group row">
+        <div class="col-sm-10 offset-sm-2">
+          <button
+            type="submit"
+            class="btn btn-primary submitBtn"
+            [disabled]="addEmployeeForm.invalid"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

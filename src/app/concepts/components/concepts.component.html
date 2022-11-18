@@ -1,0 +1,221 @@
+<div class="container-fluid mt-3">
+  <!-- accessing data from child component related -->
+  <p>
+    Data Received from Child Component:
+    {{ dataReceivedFromChildComponent?.name }}
+    {{ dataReceivedFromChildComponent?.city }}
+  </p>
+  <p>Data Accessed from Child Component: {{ dataAccessedFromChild }}</p>
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <!-- data binding tab -->
+      <a
+        class="nav-item nav-link active"
+        data-bs-toggle="tab"
+        data-bs-target="#basic-databinding"
+        role="tab"
+        aria-controls="basic-databinding"
+        aria-selected="true"
+        >Basic Data Binding</a
+      >
+      <!-- custom property binding tab -->
+      <a
+        class="nav-item nav-link"
+        data-bs-toggle="tab"
+        data-bs-target="#cpb-databinding"
+        role="tab"
+        aria-controls="cpb-databinding"
+        aria-selected="true"
+        >Custom Property Binding</a
+      >
+      <!-- custom event binding tab -->
+      <a
+        class="nav-item nav-link"
+        data-bs-toggle="tab"
+        data-bs-target="#ceb-databinding"
+        role="tab"
+        aria-controls="ceb-databinding"
+        aria-selected="true"
+        >Custom Event Binding</a
+      >
+      <!-- directive tab -->
+      <a
+        class="nav-item nav-link"
+        data-bs-toggle="tab"
+        data-bs-target="#directives-tab"
+        role="tab"
+        aria-controls="directives-tab"
+        aria-selected="false"
+        >Directives</a
+      >
+      <!-- pipes tab -->
+      <a
+        class="nav-item nav-link"
+        data-bs-toggle="tab"
+        data-bs-target="#pipes-tab"
+        role="tab"
+        aria-controls="pipes-tab"
+        aria-selected="false"
+        >Pipes</a
+      >
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <!-- data binding related -->
+    <div
+      class="tab-pane fade show active"
+      id="basic-databinding"
+      role="tabpanel"
+      aria-labelledby="basic-databinding-tab"
+    >
+      <h2>Basic Data Binding</h2>
+      <h3>Interpolation</h3>
+      <p>App Name : {{ appName }}</p>
+      <input type="text" value="{{ companyProfile.name }}" />
+      <div title="{{ companyProfile.employeesCount }}">
+        Mouse over to see cognizant's employee count
+      </div>
+
+      <hr />
+      <h3>Property Binding</h3>
+      Team Size: <input type="text" [value]="teamSize" />
+      <div [title]="teamSize">Mouse over to see team size</div>
+
+      <hr />
+      <h3>Event Binding</h3>
+      <h4>TODOs</h4>
+      <button (click)="handleClickMe($event.target)">Click Me</button>
+
+      <hr />
+      <h3>Two-way Binding</h3>
+      <p>{{ courseName }}</p>
+      <input type="text" value="{{ courseName }}" /> <br />
+      <input type="text" [value]="courseName" /> <br /><br />
+      <input type="text" [(ngModel)]="courseName" />
+    </div>
+
+    <!-- parent to child component communication -->
+    <div
+      class="tab-pane fade"
+      id="cpb-databinding"
+      role="tabpanel"
+      aria-labelledby="cpb-databinding-tab"
+    >
+      <h2>Parent to Child Comp Communication using Custom Property Binding</h2>
+      <!-- Pass the data through the age property-->
+      <app-cpb></app-cpb>
+      <app-cpb [age]="10"></app-cpb>
+      <app-cpb [age]="20"></app-cpb>
+      <app-cpb [age]="myAge"></app-cpb>
+    </div>
+
+    <!-- child to parent component communication -->
+    <div
+      class="tab-pane fade"
+      id="ceb-databinding"
+      role="tabpanel"
+      aria-labelledby="ceb-databinding-tab"
+    >
+      <h2>Child to Parent Comp Communication using Custom Event Binding</h2>
+      <app-ceb (profileLoaded)="handleProfileLoaded($event)"></app-ceb>
+    </div>
+
+    <!-- directives related -->
+    <div
+      class="tab-pane fade"
+      id="directives-tab"
+      role="tabpanel"
+      aria-labelledby="directives-tab"
+    >
+      <h2>Directives</h2>
+      <h3>ngStyle Demo</h3>
+      <div
+        [ngStyle]="{
+          color: 'red',
+          'background-color': 'yellow',
+          width: '25em',
+          'font-style': 'italic',
+          'font-weight': 'bold'
+        }"
+      >
+        This div has ngStyle attribute directive
+      </div>
+
+      <h3>Structural Directives</h3>
+      <h4>*ngIf Demo</h4>
+
+      <div class="alert alert-success" *ngIf="isLoggedIn; else pleaseLogIn">
+        You are logged in! You can access premius features of the app
+      </div>
+      <ng-template #pleaseLogIn>
+        <div class="alert alert-danger">
+          Please login to access premium features of the app
+        </div>
+      </ng-template>
+
+      <h4>*ngFor Demo</h4>
+      <ul *ngFor="let skill of skills; let i = index">
+        <li *ngIf="i < skills.length - 1">{{ i + 1 }}. {{ skill }}</li>
+      </ul>
+
+      <h4>*ngSwitch Demo</h4>
+      <input type="number" [(ngModel)]="weekDay" />
+      <div [ngSwitch]="weekDay">
+        <div *ngSwitchCase="1">Sunday</div>
+        <div *ngSwitchCase="2">monday</div>
+        <div *ngSwitchCase="3">Tuesday</div>
+        <div *ngSwitchCase="4">Wednesday</div>
+        <div *ngSwitchCase="5">Thrusday</div>
+        <div *ngSwitchCase="6">Friday</div>
+        <div *ngSwitchCase="7">Saturday</div>
+        <div *ngSwitchDefault>Invalid day</div>
+      </div>
+      <hr />
+
+      <h4>Custom Attribute Directive - Demo</h4>
+      <div class="colorizerDemo" appColorizer>Random text</div>
+
+      <!-- <h4>Custom Structural Directive</h4>
+      <div *appDemoIf>
+        <p>Wow</p>
+      </div> -->
+
+      <h4>Custom Structural Directive - Demo of DemoIf</h4>
+      <div *appDemoIf="isLoggedIn">
+        <div class="alert alert-success">You are logged in</div>
+      </div>
+      <div *appDemoIf="!isLoggedIn">
+        <div class="alert alert-danger">Please log in</div>
+      </div>
+
+      <h4>Custom Structural Directive - Demo of Unless</h4>
+      <div *appUnless="isLoggedIn">
+        <button class="btn btn-danger">Logout</button>
+      </div>
+      <div *appUnless="!isLoggedIn">
+        <button class="btn btn-success">Login</button>
+      </div>
+    </div>
+
+    <!-- pipes related -->
+    <div
+      class="tab-pane fade"
+      id="pipes-tab"
+      role="tabpanel"
+      aria-labelledby="pipes-tab"
+    >
+      <h2>Pipes</h2>
+      <p>{{ dummyText }}</p>
+      <p>{{ dummyText | lowercase }}</p>
+      <p>{{ dummyText | uppercase }}</p>
+      <hr />
+      <p>{{ today }}</p>
+      <p>{{ today | date }}</p>
+      <p>{{ today | date: "dd-MMM-yyyy" }}</p>
+      <p>{{ today | date: "MMMM dd, yyyy hh:mm:ss a" }}</p>
+      <hr />
+      <p>{{ dummyText | ellipsis }}</p>
+      <p>{{ dummyText | ellipsis: 50 }}</p>
+    </div>
+  </div>
+</div>

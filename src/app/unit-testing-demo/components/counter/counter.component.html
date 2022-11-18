@@ -1,0 +1,14 @@
+<div>
+  <h2 style="background-color: rgb(255, 0, 0)">
+    Counter | Testing CSS Style, CSS Class, Events
+  </h2>
+
+  <p class="counterTxt">Counter: {{ counterValue }}</p>
+  <p class="counterMsg">{{ message }}</p>
+  <button class="btn btn-success incrementBtn" (click)="handleIncrement()">
+    Increment
+  </button>
+  <button class="btn btn-danger decrementBtn" (click)="handleDecrement()">
+    Decrement
+  </button>
+</div>

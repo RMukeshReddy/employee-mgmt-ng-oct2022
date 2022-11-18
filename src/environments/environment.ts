@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  employeesRestApi: 'https://jsonplaceholder.typicode.com/users',
+  signupRestApi: 'https://reqres.in/api/register',
+  loginRestApi: 'https://reqres.in/api/login'
 };
 
 /*

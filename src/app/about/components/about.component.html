@@ -1,0 +1,22 @@
+<div>
+  <h1>{{ featureName }}</h1>
+  <!-- calc component -->
+  <app-calc></app-calc>
+  <!-- ngZone related -->
+  <p>Progress: {{progress}}%</p>
+  <p *ngIf="progress >= 100">Done processing {{label}} of Angular zone!</p>
+  <button (click)="processWithinAngularZone()">Process within Angular zone</button>
+  <button (click)="processOutsideOfAngularZone()">Process outside of Angular zone</button>
+</div>
+<!-- animation related -->
+<button type="button" (click)="toggle()">Toggle Open/Close</button>
+<div [@openClose]="isOpen ? 'open' : 'closed'" class="openCloseContainer">
+  <p>The box is now {{ isOpen ? "Open" : "Closed" }}!</p>
+</div>
+<hr/>
+<!-- internationalization related -->
+<div>
+  <h2 i18n>Welcome!</h2>
+  <h3 i18n>Internationalization and Localization Demo</h3>
+  <p i18n>Implementing in about component</p>
+</div>

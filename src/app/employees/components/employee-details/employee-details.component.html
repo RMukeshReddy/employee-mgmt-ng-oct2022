@@ -1,0 +1,212 @@
+<a routerLink="/employees">Go back</a>
+<div class="container">
+  <div class="row">
+    <div class="card col-md-12">
+      <div class="card-body" *ngIf="employee">
+        <h5 class="card-title">{{ employee.name }}</h5>
+        <p class="card-text">
+          Some quick example text to build on the card title and make up the
+          bulk of the card's content.
+        </p>
+        <p>Phone: {{ employee.phone }}</p>
+        <p>Email: {{ employee.email }}</p>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#editEmployeeModal"
+          (click)="handleEditModalOpen()"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteEmployeeModal"
+        >
+          Delete
+        </button>
+
+        <!-- delete modal -->
+        <div
+          class="modal fade"
+          id="deleteEmployeeModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Delete Employee</h2>
+              </div>
+              <div class="modal-body">
+                <p>Are you sure want to delete?</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  No
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-dismiss="modal"
+                  (click)="handleDeleteEmployee()"
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- update modal and form-->
+        <div
+          class="modal fade"
+          id="editEmployeeModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                  Update Employee
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <!-- updating form logic -->
+              <div class="modal-body" *ngIf="duplicateEmployee">
+                <form
+                  #updateEmployeeForm="ngForm"
+                  (ngSubmit)="handleUpdateEmployee(updateEmployeeForm)"
+                >
+                <!-- name input field -->
+                  <div class="form-group row mb-3">
+                    <label for="staticEmail" class="col-sm-2 col-form-label"
+                      >Name</label
+                    >
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter name"
+                        [(ngModel)]="duplicateEmployee.name"
+                        name="empName"
+                        #name="ngModel"
+                        [ngClass]="{
+                          'is-invalid': name.touched && name.invalid
+                        }"
+                        required
+                      />
+                      <!-- name input field validations -->
+                      <div class="invalid-feedback">Name is Required</div>
+                    </div>
+                  </div>
+                  <!-- phone input field -->
+                  <div class="form-group row mb-3">
+                    <label for="staticEmail" class="col-sm-2 col-form-label"
+                      >Phone</label
+                    >
+                    <div class="col-sm-10">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Phone"
+                        [(ngModel)]="duplicateEmployee.phone"
+                        name="empPhone"
+                        #phone="ngModel"
+                        [ngClass]="{
+                          'is-invalid': phone.touched && phone.invalid
+                        }"
+                        minlength="10"
+                        maxlength="12"
+                        required
+                        phone
+                      />
+                      <!-- phone input field validations -->
+                      <div class="invalid-feedback">
+                        <div *ngIf="phone.errors?.['required']">
+                          Phone is Required
+                        </div>
+                        <div *ngIf="phone.errors?.['minlength']">
+                          Phone should have minimum 10 numbers
+                        </div>
+                        <div *ngIf="phone.errors?.['maxlength']">
+                          Phone should have maximum 12 numbers
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- email input field -->
+                  <div class="form-group row mb-3">
+                    <label for="staticEmail" class="col-sm-2 col-form-label"
+                      >Email</label
+                    >
+                    <div class="col-sm-10">
+                      <input
+                        type="email"
+                        class="form-control"
+                        placeholder="Enter Email"
+                        [(ngModel)]="duplicateEmployee.email"
+                        name="empEmail"
+                        #email="ngModel"
+                        [ngClass]="{
+                          'is-invalid': email.touched && email.invalid
+                        }"
+                        required
+                        email
+                      />
+                      <!-- email input field validations -->
+                      <div class="invalid-feedback">
+                        <div *ngIf="email.errors?.['required']">
+                          Email is Required
+                        </div>
+                        <div *ngIf="email.errors?.['email']">
+                          Email seems to be not valid
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- close button -->
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <!-- save changes/ update button -->
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      data-bs-dismiss="modal"
+                      [disabled]="updateEmployeeForm.invalid"
+                    >
+                      Save changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

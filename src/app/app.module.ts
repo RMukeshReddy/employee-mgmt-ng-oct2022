@@ -1,18 +1,69 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
+import { MenuComponent } from './shared/components/menu/menu.component';
+import { HomeComponent } from './home/home.component';
+import { ConceptsComponent } from './concepts/components/concepts.component';
+import { AboutComponent } from './about/components/about.component';
+import { CpbComponent } from './concepts/components/cpb/cpb.component';
+import { CebComponent } from './concepts/components/ceb/ceb.component';
+import { CalcComponent } from './about/components/calc/calc.component';
+import { ColorizerDirective } from './concepts/directives/colorizer.directive';
+import { DemoIfDirective } from './concepts/directives/demo-if.directive';
+import { UnlessDirective } from './concepts/directives/unless.directive';
+import { UnitTestingDemoComponent } from './unit-testing-demo/components/unit-testing-demo/unit-testing-demo.component';
+import { CounterComponent } from './unit-testing-demo/components/counter/counter.component';
+import { HighlightDirective } from './unit-testing-demo/directives/highlight.directive';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
+import { EllipsisPipe } from './shared/pipes/ellipsis.pipe';
+import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BnNgIdleService } from 'bn-ng-idle';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    MenuComponent,
+    HomeComponent,
+    ConceptsComponent,
+    AboutComponent,
+    CpbComponent,
+    CebComponent,
+    CalcComponent,
+    ColorizerDirective,
+    DemoIfDirective,
+    UnlessDirective,
+    UnitTestingDemoComponent,
+    CounterComponent,
+    HighlightDirective,
+    EllipsisPipe,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    NgxSpinnerModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    BnNgIdleService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+    }
+  ],
+  bootstrap: [AppComponent] //Appmodule should be bootstraped with Appcomponent
 })
 export class AppModule { }

@@ -4,6 +4,12 @@
   "newProjectRoot": "projects",
   "projects": {
     "employee-mgmt-ng-oct2022": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es-PR": "src/locale/about.es.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -17,6 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["es-PR"],
             "outputPath": "dist/employee-mgmt-ng-oct2022",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -27,9 +34,14 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-spinner/animations/ball-spin-clockwise.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -98,9 +110,21 @@
             ],
             "scripts": []
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "employee-mgmt-ng-oct2022"
+  "defaultProject": "employee-mgmt-ng-oct2022",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
